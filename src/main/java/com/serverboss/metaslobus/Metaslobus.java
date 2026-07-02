@@ -22,6 +22,10 @@ public final class Metaslobus {
 				new ResourceLocation(MOD_ID, "perspective_model"),
 				new PerspectiveModelLoader()
 			);
+			System.out.println("HOW MUCH");
+			System.out.println("LONGER NOW...?");
+			System.out.println("MY");
+			System.out.println("METASLOBUS.");
 		}
 
 	}
