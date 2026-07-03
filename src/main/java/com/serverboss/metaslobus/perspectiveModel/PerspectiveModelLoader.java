@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.client.model.IModelLoader;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -27,10 +26,10 @@ public class PerspectiveModelLoader implements IModelLoader<PerspectiveModelGeom
 	);
 
 	@Override
-	public void onResourceManagerReload(@NotNull ResourceManager manager) {}
+	public void onResourceManagerReload(ResourceManager manager) {}
 
 	@Override
-	public @NotNull PerspectiveModelGeometry read(@NotNull JsonDeserializationContext ctx, @NotNull JsonObject json) {
+	public PerspectiveModelGeometry read(JsonDeserializationContext ctx, JsonObject json) {
 		Map<ItemTransforms.TransformType, ResourceLocation> models = new EnumMap<>(ItemTransforms.TransformType.class);
 
 		for (var entry : KEY_MAP.entrySet()) {

@@ -10,7 +10,6 @@ import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.IModelConfiguration;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
-import org.jetbrains.annotations.Nullable;
 
 public class PerspectiveModelGeometry
 	implements IModelGeometry<PerspectiveModelGeometry>
@@ -18,12 +17,11 @@ public class PerspectiveModelGeometry
 
 	private final Map<ItemTransforms.TransformType, ResourceLocation> models;
 
-	@Nullable
 	private final ResourceLocation defaultModel;
 
 	public PerspectiveModelGeometry(
 		Map<ItemTransforms.TransformType, ResourceLocation> models,
-		@Nullable ResourceLocation defaultModel
+		ResourceLocation defaultModel
 	) {
 		this.models = models;
 		this.defaultModel = defaultModel;

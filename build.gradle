@@ -1,41 +1,53 @@
 plugins {
-	id 'dev.architectury.loom' version '1.11-SNAPSHOT'
+	id 'net.neoforged.moddev.legacyforge' version '2.0.141'
 }
 
-base.archivesName = project.mod_id
-version = project.mod_version
-group = project.mod_group
+base.archivesName = mod_id
+version = mod_version
+group = mod_group
 
-loom {
-	silentMojangMappingsLicense()
-	forge {
-		mixinConfig 'metaslobus.mixins.json'
+legacyForge {
+	version = forge_version
+
+	runs {
+		client {
+			client()
+		}
+	}
+
+	mods {
+		"$mod_id" {
+			sourceSet sourceSets.main
+		}
 	}
 }
 
-repositories {
-	mavenCentral()
+mixin {
+	add sourceSets.main, "mixins.${mod_id}.refmap.json"
+	config "${mod_id}.mixins.json"
 }
 
-dependencies {
-	minecraft "net.minecraft:minecraft:$minecraft_version"
-	mappings loom.officialMojangMappings()
-	forge "net.minecraftforge:forge:$forge_version"
+jar {
+	manifest.attributes([
+		"MixinConfigs": "${mod_id}.mixins.json"
+	])
 }
 
-processResources {
-	inputs.property 'version', project.version
-
+tasks.named('processResources') {
 	filesMatching('META-INF/mods.toml') {
-		expand version: inputs.properties.version
+		expand project.properties
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 16
-}
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
-java {
-	sourceCompatibility = JavaVersion.VERSION_16
-	targetCompatibility = JavaVersion.VERSION_16
-}
+//tasks.named('processResources') {
+//	def replaceProperties = [
+//		mod_id: mod_id,
+//		mod_version: mod_version
+//	]
+//	inputs.properties replaceProperties
+//	filesMatching('META-INF/mods.toml') {
+//		expand replaceProperties
+//	}
+//}

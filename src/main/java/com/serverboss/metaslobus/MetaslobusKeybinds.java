@@ -10,33 +10,67 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmlclient.registry.ClientRegistry;
+import org.lwjgl.glfw.GLFW;
 
-@Mod.EventBusSubscriber(
-	bus = Mod.EventBusSubscriber.Bus.FORGE,
-	value = Dist.CLIENT
-)
+import java.util.HashMap;
+import java.util.Map;
+
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class MetaslobusKeybinds {
 
 	private static final Minecraft MINECRAFT = Minecraft.getInstance();
 
 	public static void register() {
-		ClientRegistry.registerKeyBinding(CUSTOM_KEY);
+		ClientRegistry.registerKeyBinding(CUSTOM_ALPHA_KEY);
+		ClientRegistry.registerKeyBinding(CUSTOM_BETA_KEY);
+		ClientRegistry.registerKeyBinding(CUSTOM_GAMMA_KEY);
+		ClientRegistry.registerKeyBinding(CUSTOM_DELTA_KEY);
+		ClientRegistry.registerKeyBinding(CUSTOM_EPSILON_KEY);
 	}
 
-	public static final KeyMapping CUSTOM_KEY = new KeyMapping(
-		"key.metaslobus.custom",
-		KeyConflictContext.IN_GAME,
-		InputConstants.Type.KEYSYM,
-		InputConstants.KEY_G,
-		"key.categories.metaslobus"
+	public static final KeyMapping CUSTOM_ALPHA_KEY = new InclusiveKeyMapping(
+		"key.metaslobus.custom.alpha",
+		InputConstants.Type.MOUSE,
+		GLFW.GLFW_MOUSE_BUTTON_3
+	);
+
+	public static final KeyMapping CUSTOM_BETA_KEY = new InclusiveKeyMapping(
+		"key.metaslobus.custom.beta",
+		InputConstants.Type.MOUSE,
+		GLFW.GLFW_MOUSE_BUTTON_4
+	);
+
+	public static final KeyMapping CUSTOM_GAMMA_KEY = new InclusiveKeyMapping(
+		"key.metaslobus.custom.gamma",
+		InputConstants.KEY_G
+	);
+
+	public static final KeyMapping CUSTOM_DELTA_KEY = new InclusiveKeyMapping(
+		"key.metaslobus.custom.delta",
+		InputConstants.KEY_H
+	);
+
+	public static final KeyMapping CUSTOM_EPSILON_KEY = new InclusiveKeyMapping(
+		"key.metaslobus.custom.epsilon",
+		InputConstants.KEY_J
+	);
+
+	public static final Map<String, KeyMapping> KEY_MAPPINGS = Map.of(
+		"alpha", CUSTOM_ALPHA_KEY,
+		"beta", CUSTOM_BETA_KEY,
+		"gamma", CUSTOM_GAMMA_KEY,
+		"delta", CUSTOM_DELTA_KEY,
+		"epsilon", CUSTOM_EPSILON_KEY
 	);
 
 	@SubscribeEvent
 	public static void onKeyInput(InputEvent.KeyInputEvent event) {
-		if (CUSTOM_KEY.consumeClick()) {
-			ClientPacketListener connection = MINECRAFT.getConnection();
-			if (connection != null) connection.send(new ServerbossCustomPacket("test"));
-		}
+		KEY_MAPPINGS.forEach((key, mapping) -> {
+			if (mapping.consumeClick()) {
+				ClientPacketListener connection = MINECRAFT.getConnection();
+				if (connection != null) connection.send(new ServerbossCustomPacket("keybind." + key));
+			}
+		});
 	}
 
 }

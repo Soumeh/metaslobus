@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraftforge.client.model.BakedModelWrapper;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class PerspectiveBakedModel extends BakedModelWrapper<BakedModel> {
 	}
 
 	@Override
-	public @NotNull BakedModel handlePerspective(@NotNull ItemTransforms.TransformType type, @NotNull PoseStack poseStack) {
+	public BakedModel handlePerspective(ItemTransforms.TransformType type, PoseStack poseStack) {
 		return resolve(type).handlePerspective(type, poseStack);
 	}
 
