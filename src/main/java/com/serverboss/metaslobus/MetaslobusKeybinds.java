@@ -31,13 +31,13 @@ public final class MetaslobusKeybinds {
 	public static final KeyMapping CUSTOM_ALPHA_KEY = new InclusiveKeyMapping(
 		"key.metaslobus.custom.alpha",
 		InputConstants.Type.MOUSE,
-		GLFW.GLFW_MOUSE_BUTTON_3
+		GLFW.GLFW_MOUSE_BUTTON_4
 	);
 
 	public static final KeyMapping CUSTOM_BETA_KEY = new InclusiveKeyMapping(
 		"key.metaslobus.custom.beta",
 		InputConstants.Type.MOUSE,
-		GLFW.GLFW_MOUSE_BUTTON_4
+		GLFW.GLFW_MOUSE_BUTTON_5
 	);
 
 	public static final KeyMapping CUSTOM_GAMMA_KEY = new InclusiveKeyMapping(
