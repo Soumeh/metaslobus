@@ -39,15 +39,4 @@ tasks.named('processResources') {
 	}
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
-
-//tasks.named('processResources') {
-//	def replaceProperties = [
-//		mod_id: mod_id,
-//		mod_version: mod_version
-//	]
-//	inputs.properties replaceProperties
-//	filesMatching('META-INF/mods.toml') {
-//		expand replaceProperties
-//	}
-//}
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
