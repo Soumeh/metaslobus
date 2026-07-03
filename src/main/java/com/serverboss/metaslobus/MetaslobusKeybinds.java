@@ -1,6 +1,8 @@
 package com.serverboss.metaslobus;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -11,9 +13,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class MetaslobusKeybinds {
@@ -65,12 +64,20 @@ public final class MetaslobusKeybinds {
 
 	@SubscribeEvent
 	public static void onKeyInput(InputEvent.KeyInputEvent event) {
+		ClientPacketListener connection = MINECRAFT.getConnection();
+		if (connection == null) return;
+
+		boolean pressedSpace = event.getAction() == GLFW.GLFW_PRESS
+			&& event.getKey() == MINECRAFT.options.keyJump.getKey().getValue()
+			&& MINECRAFT.screen == null;
+		if (pressedSpace) {
+			connection.send(ServerbossCustomPacket.of("keybind.jump"));
+		}
+
 		KEY_MAPPINGS.forEach((key, mapping) -> {
 			if (mapping.consumeClick()) {
-				ClientPacketListener connection = MINECRAFT.getConnection();
-				if (connection != null) connection.send(new ServerbossCustomPacket("keybind." + key));
+				connection.send(ServerbossCustomPacket.of("keybind." + key));
 			}
 		});
 	}
-
 }
