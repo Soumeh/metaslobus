@@ -14,6 +14,7 @@ public class MetaslobusClient {
 	public static void onModelLoaderRegistry(ModelRegistryEvent event) {
 		ModelLoaderRegistry.registerLoader(Metaslobus.of("perspective_model"), new PerspectiveModelLoader());
 		MetaslobusKeybinds.register();
+		MetaslobusPackets.register();
 		System.out.println("HOW MUCH LONGER NOW...?");
 		System.out.println("MY METASLOBUS.");
 	}
