@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin {
@@ -28,10 +29,15 @@ public class TitleScreenMixin {
 		method = "init",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/client/gui/components/Button;<init>(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/Button$OnPress;)V",
-			ordinal = 0
+			target = "Lnet/minecraft/client/gui/components/Button;<init>(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/Button$OnPress;)V"
 		),
-		index = 2
+		index = 2,
+		slice = @Slice(
+			to = @At(
+				value = "INVOKE",
+				target = "Lnet/minecraftforge/client/gui/NotificationModUpdateScreen;init(Lnet/minecraft/client/gui/screens/TitleScreen;Lnet/minecraft/client/gui/components/Button;)Lnet/minecraftforge/client/gui/NotificationModUpdateScreen;"
+			)
+		)
 	)
 	private int widenModsButton(int width) {
 		return 200;
